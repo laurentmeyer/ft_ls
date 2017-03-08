@@ -1,0 +1,8 @@
+Cas d'erreur
+- n'arrive pas à ouvrir un dossier / fichier
+
+Cas à traiter
+- dossiers (avec tous les droits).
+- fichier
+- lien dur / symbolique
+- 
