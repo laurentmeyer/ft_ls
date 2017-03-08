@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:47:56 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/01/05 14:56:12 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/02/03 14:35:14 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,7 @@ char					*ft_strlast(char *s);
 char					*ft_wcrtoutf(wchar_t w);
 int						ft_valid_int_str(char *s);
 int						gnlite(const int fd, char **line);
+int						ft_getopt(int argc, const char **argv,
+									const char *optstring);
 
 #endif
