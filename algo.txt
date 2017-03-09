@@ -2,7 +2,50 @@ Cas d'erreur
 - n'arrive pas à ouvrir un dossier / fichier
 
 Cas à traiter
-- dossiers (avec tous les droits).
-- fichier
-- lien dur / symbolique
-- 
+* droits (avec / sans).
+* types de fichiers
+	- Regular file
+	- directory
+	- character device (?)
+	- block device
+	- FIFO or pipe
+	- socket
+	- symbolic link
+	- shared memory object (?) => page 282, ref chap 54
+	- checker potentiels autres dans sys/stat.h
+* devices (/dev) 
+
+
+The usageErr() function is used to diagnose errors in command-line argument usage. It takes an argument list in the style of printf() and prints the string Usage: followed by the formatted output on standard error, and then terminates the pro- gram by calling exit().
+The cmdLineErr() function is similar to usageErr(), but is intended for diagnosing errors in the command-line arguments specified to a program.
+The i-node number (or simply i-number) of a file is the first field displayed by the ls –li command.
+
+stat() returns information about a named file;
+lstat() is similar to stat(), except that if the named file is a symbolic link, infor- mation about the link itself is returned, rather than the file to which the link points
+The stat() and lstat() system calls don’t require permissions on the file itself. However, execute (search) permission is required on all of the parent directories specified in pathname.
+
+!! a partir de la page 280 ca repond a tous les besoins.
+
+The major and minor IDs of a dev_t value can be extracted using two macros: major() and minor(). The header file required to obtain the declarations of these two macros varies across UNIX implementations. On Linux, they are exposed by <sys/types.h> if the _BSD_SOURCE macro is defined.
+=> vérifier que c'est dans la norme vu qu'il s'agit de macros et non de fonctions, mais ca m'étonnerait.
+
+revoir cette histoire de holes (section 4.7).
+
+some Linux distributions alias the ls command to include flags (e.g., –F) that require access to i-node information for files in the directory, and this requires execute permission on the directory. To ensure that we are using an unadulterated ls, we can specify the full pathname of the command (/bin/ls).
+
+If the sticky bit for a file is set, ls –l shows a lowercase or uppercase letter T in the other-execute permission field, depending on whether the other-execute permission bit is on or off.
+
+chflags:
+UF_NODUMP      Do not dump the file.
+UF_IMMUTABLE   The file may not be changed.
+UF_APPEND      The file may only be appended to.
+UF_OPAQUE      The directory is opaque when viewed through a union stack.
+UF_HIDDEN      The file or directory is not intended to be displayed to the user.
+SF_ARCHIVED    The file has been archived.
+SF_IMMUTABLE   The file may not be changed.
+SF_APPEND      The file may only be appended to.
+
+The ls –F command displays a trailing @ character at the end of symbolic links.
+
+The nftw() function allows a program to recursively walk through an entire direc- tory subtree performing some operation (i.e., calling some programmer-defined function) for each file in the subtree.
+=> p 358, A IMPLEMENTER !! mais en verifiant d'abord que le vrai ls fait une traversee depth-first et non pas breadth first.
