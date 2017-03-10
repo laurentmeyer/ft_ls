@@ -10,10 +10,50 @@ Cas à traiter
 	- block device
 	- FIFO or pipe
 	- socket
-	- symbolic link
+	- symbolic link vers file et vers dossier
 	- shared memory object (?) => page 282, ref chap 54
 	- checker potentiels autres dans sys/stat.h
 * devices (/dev) 
+* dossier vide, dossier ".", dossier ".."
+
+OPTIONS A GERER
+- a Include directory entries whose names begin with a dot (.).
+- l (The lowercase letter ``ell''.)  List in long format.  (See below.)  If the output is to a terminal, a total sum for all the file sizes is output on a line before the long listing.
+-R Recursively list subdirectories encountered.
+-r Reverse the order of the sort to get reverse lexicographical order or the oldest entries first (or largest files last, if combined with sort by size
+-t Sort by time modified (most recently modified first) before sorting the operands by lexicographical order.
+
+OPTIONS FACULTATIVES
+-d Directories are listed as plain files (not searched recursively).
+-f Output is not sorted.  This option turns on the -a option.
+-u Use time of last access, instead of last modification of the file for sorting (-t) or long printing (-l).
+
+NOTES
+- cas spécial d'un fichier : comme une liste d'un seul élément
+- un ou plusieurs dossiers de départ
+- un ordre de tri (de base ASCII)
+- des choix d'affichage
+- des options pour multiples actions : simple ou liste, récursif
+trouver la taille mini a partir de laquelle on abandonne l'affichage par colonnes.
+faire des macros pour rendre le programme portable meme avec l'inode 64
+verifier que nftw fait exactement ce qu'on veut avant de la dupliquer
+verifier comment marche le recursif avec les liens vers des dossiers, avec les options qui les dereferencent et celles qui ne les dereferencent pas.
+3eme paragraphe http://pubs.opengroup.org/onlinepubs/000095399/utilities/ls.html
+valeur de retour ?
+Pour savoir si le message est sur la stderr (sortie 2) , rajoute 2>/dev/null après ton ls
+slack : utiliser arg[0] ?
+
+
+
+FLAGS
+- multiple inputs
+
+
+ALGO
+- on 
+
+STRUCTURE DE DONNEES
+- 
 
 
 The usageErr() function is used to diagnose errors in command-line argument usage. It takes an argument list in the style of printf() and prints the string Usage: followed by the formatted output on standard error, and then terminates the pro- gram by calling exit().
@@ -45,7 +85,27 @@ SF_ARCHIVED    The file has been archived.
 SF_IMMUTABLE   The file may not be changed.
 SF_APPEND      The file may only be appended to.
 
-The ls –F command displays a trailing @ character at the end of symbolic links.
+The opendir() function opens the directory specified by dirpath and returns a pointer to a structure of type DIR. This structure is a so-called directory stream, which is a handle that the caller passes to the other functions.
+
 
 The nftw() function allows a program to recursively walk through an entire direc- tory subtree performing some operation (i.e., calling some programmer-defined function) for each file in the subtree.
 => p 358, A IMPLEMENTER !! mais en verifiant d'abord que le vrai ls fait une traversee depth-first et non pas breadth first.
+!! semble deprecie => remplacer par les fonctions fts. The fts functions are provided for traversing UNIX file hierarchies.
+ 
+Using the information in the d_type field saves the cost of calling lstat() in order to discover the file type.
+
+Further information about the file referred to by d_name can be obtained by calling stat() on the pathname constructed using the dirpath argument that was specified to opendir() concatenated with (a slash and) the value returned in the d_name field.
+
+The command ls –f lists files in the same unsorted order that they would be retrieved by readdir().
+
+On end-of-directory or error, readdir() returns NULL, in the latter case setting errno to indicate the error. To distinguish these two cases, we can write the following:
+	errno = 0;
+	direntp = readdir(dirp);
+	if (direntp == NULL) {
+		if (errno != 0) {
+			/* Handle error */
+		} else {
+			/* We reached end-of-directory */
+		} }
+
+!! programme similaire a partir de la page 356
