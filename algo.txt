@@ -1,5 +1,7 @@
 Cas d'erreur
 - n'arrive pas à ouvrir un dossier / fichier
+- chemin mentionné n'existe pas
+- les droits ne permettent pas le listage par ls
 
 Cas à traiter
 * droits (avec / sans).
@@ -27,6 +29,7 @@ OPTIONS FACULTATIVES
 -d Directories are listed as plain files (not searched recursively).
 -f Output is not sorted.  This option turns on the -a option.
 -u Use time of last access, instead of last modification of the file for sorting (-t) or long printing (-l).
+- gérer les colonnes avec tty (cf chap 62 p 1289).
 
 NOTES
 - cas spécial d'un fichier : comme une liste d'un seul élément
@@ -42,15 +45,33 @@ verifier comment marche le recursif avec les liens vers des dossiers, avec les o
 valeur de retour ?
 Pour savoir si le message est sur la stderr (sortie 2) , rajoute 2>/dev/null après ton ls
 slack : utiliser arg[0] ?
+ne pas oublier de mettre les couleurs pour les liens symboliques etc.
+pourquoi ls -l /dev/zero donne comme resultat
+	crw-rw-rw-  1 root  wheel    3,   3 Feb 14 11:00 /dev/zero
+(préfixé)
 
 
+==========================DEROULEMENT=================================
+- on lit les options éventuelles.
+- si zero argument, lance la fonction principale sur dossier actuel.
+- si un seul argument, lance la fonction sur le dossier demandé, avec check d'erreurs.
+- si plusieurs arguments, on checke pour chacun la validité puis on le pousse dans une des deux listes chainees (ou tableaux) : un de fichiers, un de dossiers.
+	=> est-ce bien vrai ? quid des autres types tels que FIFO etc.
+- check d'erreur sur chacun au moment de la lecture, avant de 
+- puis on fait une passe des fichiers demandés s'il y en a, avec l'ordre et les options demandées.
+- puis une passe des dossiers où l'on lance la fonction principale sur chaque dossier.
+- 
+
+TO-DO List
+- finir de dev et tester getopt
+- verifier si les fonctions fts répondent bien au besoin et les implémenter dans la libft
+- creer un jeu de test pour ls
+- mettre en place l'algo de base avec affichage simple
+- voir si on fait affichage avec tty.
 
 FLAGS
 - multiple inputs
 
-
-ALGO
-- on 
 
 STRUCTURE DE DONNEES
 - 
