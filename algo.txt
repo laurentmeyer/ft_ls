@@ -50,24 +50,17 @@ pourquoi ls -l /dev/zero donne comme resultat
 	crw-rw-rw-  1 root  wheel    3,   3 Feb 14 11:00 /dev/zero
 (préfixé)
 
+Avec l'option -R, on peut repasser deux fois dans la meme arborescence.
+
 
 ==========================DEROULEMENT=================================
 - on lit les options éventuelles.
 - si zero argument, lance la fonction principale sur dossier actuel.
 - si un seul argument, lance la fonction sur le dossier demandé, avec check d'erreurs.
 - si plusieurs arguments, on checke pour chacun la validité puis on le pousse dans une des deux listes chainees (ou tableaux) : un de fichiers, un de dossiers.
-	=> est-ce bien vrai ? quid des autres types tels que FIFO etc.
-- check d'erreur sur chacun au moment de la lecture, avant de 
-- puis on fait une passe des fichiers demandés s'il y en a, avec l'ordre et les options demandées.
+- puis on fait une passe des fichiers valides demandés, s'il y en a, avec l'ordre et les options demandées.
 - puis une passe des dossiers où l'on lance la fonction principale sur chaque dossier.
 - 
-
-TO-DO List
-- finir de dev et tester getopt
-- verifier si les fonctions fts répondent bien au besoin et les implémenter dans la libft
-- creer un jeu de test pour ls
-- mettre en place l'algo de base avec affichage simple
-- voir si on fait affichage avec tty.
 
 FLAGS
 - multiple inputs

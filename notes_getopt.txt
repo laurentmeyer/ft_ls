@@ -9,6 +9,7 @@ There are two circumstances where we may make use of optind:
 - If getopt() returns –1, indicating that no more options are present and optind is less than argc, then argv[optind] is the location of the next nonoption word from the command line.
 - If we are processing multiple command-line vectors or rescanning the same command line, then we must explicitly reset optind to 1.
 
+- si on rencontre un "--" optind renvoie l'index de l'argument suivant.
 
 
 
