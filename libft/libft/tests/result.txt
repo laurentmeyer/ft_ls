@@ -1,0 +1,29 @@
+
+=========== TEST SIMPLE =========
+
+1,13d0
+< aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+< dir01
+< dir1
+< dir11
+< dir2
+< dirnorights
+< dirwithrights
+< fifo1
+< rootfile
+< 
+< /Users/lmeyer/ft_ls/libft/libft/tests/test/dir01:
+< 
+< /Users/lmeyer/ft_ls/libft/libft/tests/test/dir1:
+20,30d6
+< 
+< /Users/lmeyer/ft_ls/libft/libft/tests/test/dir11:
+< file1
+< 
+< /Users/lmeyer/ft_ls/libft/libft/tests/test/dir2:
+< file1
+< 
+< /Users/lmeyer/ft_ls/libft/libft/tests/test/dirnorights:
+< 
+< /Users/lmeyer/ft_ls/libft/libft/tests/test/dirwithrights:
+< file1
