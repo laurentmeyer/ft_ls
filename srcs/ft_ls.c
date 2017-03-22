@@ -44,8 +44,8 @@ static int	read_args(int argc, char **argv)
 
 int			main(int argc, char **argv)
 {
-	char	*files[argc];
-	char	*dirs[argc];
+	//char	*files[argc];
+	//char	*dirs[argc];
 	int 	options;
 
 	//ft_printf("%d\n", g_optind);

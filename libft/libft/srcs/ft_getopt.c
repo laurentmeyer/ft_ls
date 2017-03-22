@@ -28,7 +28,7 @@ static int	st_error(int errcode)
 	return (-1);
 }
 
-int			ft_getopt(int argc, const char **argv, const char *optstring)
+int			ft_getopt(int argc, char * const argv[], const char *optstring)
 {
 	(void)argc;			// ca sent pas bon
 
