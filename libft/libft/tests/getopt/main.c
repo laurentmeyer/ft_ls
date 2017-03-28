@@ -26,26 +26,62 @@ int			main(int argc, char **argv)
 {
 	int		c;
 	int		d;
+	int		nb_errs;
 
+	nb_errs = 0;
 	printargs(argc, argv);
 	opterr = 0;				//à vérifier
-	while ((c = getopt(argc, argv, "abc:")) != -1
-			&& (d = ft_getopt(argc, argv, "abc:")) != -1)
-	{
-		if (c != d)
-			ft_printf("Return value: UNIX: %c | FT: %c\n", c, d);
-		if (ft_strcmp(optarg, g_optarg))
-			ft_printf("Optarg: UNIX: %s | FT: %s\n", optarg, g_optarg);
-		if (optind != g_optind)
-			ft_printf("Optind: UNIX: %d | FT: %d\n", optind, g_optind);
-		if (optopt != g_optopt)
-			ft_printf("Optopt: UNIX: %d | FT: %d\n", optopt, g_optopt);
-		if (opterr != g_opterr)
-			ft_printf("Opterr: UNIX: %d | FT: %d\n", opterr, g_opterr);
-		if (optreset != g_optreset)
-			ft_printf("Optreset: UNIX: %d | FT: %d\n", optreset, g_optreset);
+	g_opterr = 0;			//à vérifier
+	//if (optarg && g_optarg && ft_strcmp(optarg, g_optarg))
+		nb_errs += ft_printf("Optarg: UNIX: %s | FT: %s\n", optarg, g_optarg);
+	//if (optind != g_optind)
+		nb_errs += ft_printf("Optind: UNIX: %d | FT: %d\n", optind, g_optind);
+	//if (optopt != g_optopt)
+		nb_errs += ft_printf("Optopt: UNIX: %c | FT: %c\n", optopt, g_optopt);
+	//if (opterr != g_opterr)
+		nb_errs += ft_printf("Opterr: UNIX: %d | FT: %d\n", opterr, g_opterr);
+	//if (optreset != g_optreset)
+		nb_errs += ft_printf("Optreset: UNIX: %d | FT: %d\n", optreset, g_optreset);
+	if (nb_errs)
 		ft_printf("\n");
+	nb_errs = 0;
+	while ((c = getopt(argc, argv, "abc:")) != -1)
+	{
+		printf("coucou\n");
+		d = ft_getopt(argc, argv, "abc:");
+		printf("cca va ?\n");
+		//if (c != d)
+			nb_errs += ft_printf("Return value: UNIX: %c | FT: %c\n", c, d);
+		//if (optarg && g_optarg && ft_strcmp(optarg, g_optarg))
+			nb_errs += ft_printf("Optarg: UNIX: %s | FT: %s\n", optarg, g_optarg);
+		//if (optind != g_optind)
+			nb_errs += ft_printf("Optind: UNIX: %d | FT: %d\n", optind, g_optind);
+		//if (optopt != g_optopt)
+			nb_errs += ft_printf("Optopt: UNIX: %c | FT: %c\n", optopt, g_optopt);
+		//if (opterr != g_opterr)
+			nb_errs += ft_printf("Opterr: UNIX: %d | FT: %d\n", opterr, g_opterr);
+		//if (optreset != g_optreset)
+			nb_errs += ft_printf("Optreset: UNIX: %d | FT: %d\n", optreset, g_optreset);
+		if (nb_errs)
+			ft_printf("\n");
+		nb_errs = 0;
 	}
+	d = ft_getopt(argc, argv, "abc:");
+	//if (c != d)
+		nb_errs += ft_printf("Return value: UNIX: %d | FT: %d\n", c, d);
+	//if (optarg && g_optarg && ft_strcmp(optarg, g_optarg))
+		nb_errs += ft_printf("Optarg: UNIX: %s | FT: %s\n", optarg, g_optarg);
+	//if (optind != g_optind)
+		nb_errs += ft_printf("Optind: UNIX: %d | FT: %d\n", optind, g_optind);
+	//if (optopt != g_optopt)
+		nb_errs += ft_printf("Optopt: UNIX: %c | FT: %c\n", optopt, g_optopt);
+	//if (opterr != g_opterr)
+		nb_errs += ft_printf("Opterr: UNIX: %d | FT: %d\n", opterr, g_opterr);
+	//if (optreset != g_optreset)
+		nb_errs += ft_printf("Optreset: UNIX: %d | FT: %d\n", optreset, g_optreset);
+	if (nb_errs)
+		ft_printf("\n");
+	nb_errs = 0;
 	return (0);
 }
 

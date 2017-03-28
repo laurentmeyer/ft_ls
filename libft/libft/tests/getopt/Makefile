@@ -23,3 +23,6 @@ fclean: clean
 	rm -f $(BINARY)
 
 re: fclean all
+
+test : re
+	sh testftopt.sh

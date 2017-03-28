@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #./getopt_cmp
-./getopt_cmp -a -b
+./getopt_cmp -a
+#./getopt_cmp -a -b
 #./getopt_cmp -ab
 #./getopt_cmp -c foo
 #./getopt_cmp -cfoo
