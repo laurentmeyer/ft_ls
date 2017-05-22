@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 12:34:00 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/03/11 23:01:29 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/05/22 19:21:13 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,44 @@ static int	st_error(int errcode)
 
 int			ft_getopt(int argc, const char **argv, const char *optstring)
 {
-	(void)argc;			// ca sent pas bon
+	static char *current = "";
+	char		*index;
 
-	if (g_optreset == 1 && !(g_optopt = '\0'))
-		g_optreset = 0; // vraiment pas sur pour cette partie la
-	if (argv[g_optind] == NULL || argv[g_optind][0] != '-' ||
-			ft_strcmp(argv[g_optind], "-") || ft_strcmp(argv[g_optind], "--"))
-		return (-1);
+	if (g_optreset || current[0] = '\0')
+	{
+		g_optreset = 0;
+		if (g_optind >= argc || (current = argv[g_optind])[0] != '-'
+				|| (current[1] && (++current)[0] == '-'))
+		{
+			current = "";
+			return (-1);
+		}
+	}
+	if ((g_optopt = (int)(current++)[0]) == (int)':' ||
+			(index = ft_strchr(optstring, g_optopt)) == NULL)
+	{
+		if (g_optopt == (int)'-')
+			return (-1);
+		if (current[0] == '\0')
+			g_optind++;
+		if (optstring[0] != ':' && g_opterr == 1)
+			ft_fprintf(stderr, "%s: illegal option -- %c\n", argv[0], g_optopt);
+		return ((int)'?');
+	}
+	if ((++index)[0] != ':')
+	{
+		g_optarg = NULL;
+		if (current[0] == '\0')
+			g_optind++;
+	}
+
+
+
+
+
+
+
+
 	g_optopt = (g_optopt == '\0') ? argv[g_optind][1]
 		: ft_strchr(argv[g_optind], g_optopt)[1];
 	if (!ft_strchr(optstring, g_optopt))
