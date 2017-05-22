@@ -36,3 +36,6 @@ fclean: clean
 	rm -f $(BINARY)
 
 re: fclean all
+
+getopt : re
+	$(MAKE) -C $(LIBFT)/libft/tests/getopt/ test

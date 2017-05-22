@@ -102,7 +102,7 @@ char					*ft_strlast(char *s);
 char					*ft_wcrtoutf(wchar_t w);
 int						ft_valid_int_str(char *s);
 int						gnlite(const int fd, char **line);
-int						ft_getopt(int argc, const char **argv,
+int						ft_getopt(int argc, char * const argv[],
 									const char *optstring);
 
 #endif
