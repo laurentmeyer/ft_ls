@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 12:34:00 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/05/22 19:21:13 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/05/23 14:52:10 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,62 @@ static int	st_error(int errcode)
 
 int			ft_getopt(int argc, const char **argv, const char *optstring)
 {
-	static char *current = "";
-	char		*index;
+	static char *cur_arg_ptr = "";
+	char		*optstr_ptr;
+	
+	//logique generale : on avance dans la liste des arguments qu'on cherche dans optstr
+	//si reset, on recommence la recherche au debut du groupe d'options en cours
+	//si le groupe d'arguments étudié ne commence pas par - , terminé
+	//si le groupe d'options en cours est épuisé, on passe au suivant
+	//si on a dépassé le nombre d'argc, terminé
+	//si on rencontre --, terminé
+	//si l'option étudiée nécessite un argument et qu'il n'y en a pas, retourne ?
+	//si l'option étudiée ne se trouve pas dans optstr, retourne ?
 
-	if (g_optreset || current[0] = '\0')
+	if (g_optreset || cur_arg_ptr[0] == '\0')
 	{
 		g_optreset = 0;
-		if (g_optind >= argc || (current = argv[g_optind])[0] != '-'
-				|| (current[1] && (++current)[0] == '-'))
+		cur_arg_ptr = argv[g_optind];
+		if (cur_arg_ptr[0] != '-' || g_optind >= argc)
 		{
-			current = "";
+			cur_arg_ptr = "";
 			return (-1);
 		}
-	}
-	if ((g_optopt = (int)(current++)[0]) == (int)':' ||
-			(index = ft_strchr(optstring, g_optopt)) == NULL)
-	{
-		if (g_optopt == (int)'-')
+		++cur_arg_ptr;
+		if (cur_arg_ptr[0] == '-')
+		{
+			cur_arg_ptr = "";
 			return (-1);
-		if (current[0] == '\0')
-			g_optind++;
-		if (optstring[0] != ':' && g_opterr == 1)
-			ft_fprintf(stderr, "%s: illegal option -- %c\n", argv[0], g_optopt);
-		return ((int)'?');
+		}			// a regrouper
 	}
-	if ((++index)[0] != ':')
+	if (argv[g_optind] != (int)'-' || g_optind >= argc)
+	{
+		cur_arg_ptr = "";
+		return (-1);
+	}
+
+		//	if (cur_arg_ptr[0] == '\0' && (g_optind >= argc || (cur_arg_ptr =
+		//		argv[g_optind]) != '-' || (cur_arg_ptr[1] && (++cur_arg_ptr)[0]) == '-'))
+		//	{
+		//		cur_arg_ptr = "";
+		//		return (-1);
+		//	}
+		if ((g_optopt = (int)cur_arg_ptr[0]) == (int)':' ||
+				(optstr_ptr = ft_strchr(optstring, g_optopt)) == NULL)
+		{
+			if (g_optopt == (int)'-')
+				return (-1);
+			cur_arg_ptr++;
+			if (cur_arg_ptr[0] == '\0')
+				g_optind++;
+			if (optstring[0] != ':' && g_opterr == 1)
+				ft_fprintf(stderr, "%s: illegal option -- %c\n", argv[0], g_optopt);
+			return ((int)'?');
+		}
+	if ((++optstr_ptr)[0] != ':')
 	{
 		g_optarg = NULL;
-		if (current[0] == '\0')
+		if (cur_arg_ptr[0] == '\0')
 			g_optind++;
 	}
 
