@@ -28,6 +28,11 @@ static int	st_error(int errcode)
 	return (-1);
 }
 
+static int	return_getopt(int retval, int incr, char **cur_arg_addr, int reset)
+{
+	return (retval);
+}
+
 int			ft_getopt(int argc, const char **argv, const char *optstring)
 {
 	static char *cur_arg_ptr = "";
@@ -42,27 +47,46 @@ int			ft_getopt(int argc, const char **argv, const char *optstring)
 	//si l'option étudiée nécessite un argument et qu'il n'y en a pas, retourne ?
 	//si l'option étudiée ne se trouve pas dans optstr, retourne ?
 
+	//reset ou initialisation
 	if (g_optreset || cur_arg_ptr[0] == '\0')
 	{
 		g_optreset = 0;
+		//remise au début du pointeur
 		cur_arg_ptr = argv[g_optind];
+		// verification et avancement du pointeur
 		if (cur_arg_ptr[0] != '-' || g_optind >= argc)
-		{
-			cur_arg_ptr = "";
-			return (-1);
-		}
+			return (return_getopt(-1, 0, &cur_arg_ptr, 1));
 		++cur_arg_ptr;
 		if (cur_arg_ptr[0] == '-')
-		{
-			cur_arg_ptr = "";
-			return (-1);
-		}			// a regrouper
+			return (return_getopt(-1, 0, &cur_arg_ptr, 1));
 	}
-	if (argv[g_optind] != (int)'-' || g_optind >= argc)
+
+	// on evalue la prochaine option et avance du cusreur
+	g_optopt = (int)cur_arg_ptr[0];
+	++cur_arg_ptr;
+	optstr_ptr = ft_strchr(optstring, g_optopt);
+
+	//cas ou on renvoie '?'
+	if (g_optopt == (int)':' || !optstr_ptr)
 	{
-		cur_arg_ptr = "";
-		return (-1);
+		if (g_opterr && optstring[0] == ':')
+			fprintf(stderr, "%s: option requires an argument -- %c\n",
+					argv[0], g_optopt); // a changer avec un fprintf maison
+		if (cur_arg_ptr[0] == '\0')
+			++g_optind;
+		return ((int)'?');
 	}
+
+	// cas ou il n'y a pas besoin d'argument
+	if (optstr_ptr[1] != ':')
+	{
+		g_optarg = NULL;
+		// on change de groupe d'arguments si besoin
+		if (
+
+
+	// cas d'erreur
+	if (
 
 		//	if (cur_arg_ptr[0] == '\0' && (g_optind >= argc || (cur_arg_ptr =
 		//		argv[g_optind]) != '-' || (cur_arg_ptr[1] && (++cur_arg_ptr)[0]) == '-'))
