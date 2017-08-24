@@ -15,6 +15,7 @@
 # include <stdarg.h>
 # include <inttypes.h>
 # include <wchar.h>
+# include <stdio.h>
 # define MODIFIERS "hljz"
 # define ACCEPTABLE "0123456789.hljz#0-+ "
 # define CONVERSIONS "sSpdDioOuUxXcC%"
@@ -24,6 +25,11 @@
 # define FLAG_ZERO (1 << 2)
 # define FLAG_MINUS (1 << 3)
 # define FLAG_PLUS (1 << 4)
+# define STDERR 2
+
+extern FILE *stderr;
+extern FILE *stdin;
+extern FILE *stdout;
 
 enum					e_modif
 {
@@ -75,6 +81,9 @@ int						ft_vprintf(const char *format, va_list ap);
 int						ft_asprintf(char **ret, const char *format, ...);
 int						ft_vasprintf(char **ret, const char *format,
 										va_list ap);
+int						ft_vfprintf(FILE * stream, const char * format,
+										va_list ap);
+int						ft_fprintf(FILE * stream, const char * format, ...);
 int						find_next_conversion(char *format, char **start,
 												char **end);
 t_conv					*new_conversion(char *start, int len);
