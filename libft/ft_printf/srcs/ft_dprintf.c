@@ -4,25 +4,25 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int		ft_vfprintf(FILE * stream, const char * format, va_list ap)
+int		ft_vdprintf(int fd, const char *format, va_list ap)
 {
 	char	*str;
 	int		ret;
 
 	if ((ret = ft_vasprintf(&str, format, ap)) == ERR)
 		return (ERR);
-	write(stream, str, ret);
+	write(fd, str, ret);
 	free(str);
 	return (ret);
 }
 
-int		ft_fprintf(FILE * stream, const char * format, ...)
+int		ft_dprintf(int fd, const char *format, ...)
 {
 	va_list		ap;
 	int			ret;
 
 	va_start(ap, format);
-	ret = ft_vfprintf(stream, format, ap);
+	ret = ft_vdprintf(fd, format, ap);
 	va_end(ap);
 	return (ret);
 }

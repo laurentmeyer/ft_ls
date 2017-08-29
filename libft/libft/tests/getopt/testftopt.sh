@@ -1,16 +1,16 @@
 #!/bin/bash
 
-#./getopt_cmp
+./getopt_cmp
 ./getopt_cmp -a
-#./getopt_cmp -a -b
-#./getopt_cmp -ab
-#./getopt_cmp -c foo
-#./getopt_cmp -cfoo
-#./getopt_cmp arg1
-#./getopt_cmp -a arg1
-#./getopt_cmp -c foo arg1
-#./getopt_cmp -a -- -b
-#./getopt_cmp -a -
+./getopt_cmp -a -b
+./getopt_cmp -ab
+./getopt_cmp -c foo
+./getopt_cmp -cfoo
+./getopt_cmp arg1
+./getopt_cmp -a arg1
+./getopt_cmp -c foo arg1
+./getopt_cmp -a -- -b
+./getopt_cmp -a -
 
 #pas d'options
 #une option
