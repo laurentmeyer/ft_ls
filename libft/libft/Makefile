@@ -73,7 +73,9 @@ OBJECTS =	ft_memset.o			\
 
 NAME = libft_original.a
 
-CCHEADERS = -I ./includes/
+CCHEADERS = -I./includes/		\
+			-I../ft_printf/includes
+
 
 CCSOURCES = ./srcs/
 

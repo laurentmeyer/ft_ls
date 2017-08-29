@@ -24,6 +24,9 @@
 # define FLAG_ZERO (1 << 2)
 # define FLAG_MINUS (1 << 3)
 # define FLAG_PLUS (1 << 4)
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 enum					e_modif
 {
@@ -75,6 +78,8 @@ int						ft_vprintf(const char *format, va_list ap);
 int						ft_asprintf(char **ret, const char *format, ...);
 int						ft_vasprintf(char **ret, const char *format,
 										va_list ap);
+int						ft_dprintf(int fd, const char *format, ...);
+int						ft_vdprintf(int fd, const char *format, va_list ap);
 int						find_next_conversion(char *format, char **start,
 												char **end);
 t_conv					*new_conversion(char *start, int len);
