@@ -4,7 +4,13 @@ BINARY =	ft_ls
 SOURCEDIR =	srcs
 HEADERDIR = includes
 
-SRCFILES =	ft_ls.c
+SRCFILES =	directory.c			\
+			display.c			\
+			ft_ls.c				\
+			get_options.c		\
+			libgen.c			\
+			sort.c				\
+			t_file.c
 
 CCHEADERS = -I./$(HEADERDIR)				\
 			-I$(LIBFT)/libft/includes		\
