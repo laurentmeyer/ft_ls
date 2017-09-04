@@ -24,18 +24,21 @@ int			list_and_order_args(int argc, char **argv,
 int			main(int argc, char **argv)
 {
 	t_options 	options;
-	t_list		*arglist;
 
 	options = get_options(&argc, &argv); // rajouter une gestion d'erreurs
-	if (argc > 1)
-	{
-		if (list_and_order_args(argc, argv, &arglist, options) == ERROR)
-			return (ERROR);
-	}
-	else
-	{
-		if (display_dir_contents(argv[0], options) == ERROR)
-			return (ERROR);
-	}
+	display_dir_contents(argv[0], &options); // en attendant de gerer multiargs
+
+	//t_list		*arglist;
+	//if (argc > 1)
+	//{
+	//	if (list_and_order_args(argc, argv, &arglist, options) == ERROR)
+	//		return (ERROR);
+	//}
+	//else
+	//{
+	//	if (display_dir_contents(argv[0], options) == ERROR)
+	//		return (ERROR);
+	//}
+
 	return (0);
 }

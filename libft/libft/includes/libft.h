@@ -26,6 +26,8 @@ typedef	struct			s_list
 	struct s_list		*next;
 }						t_list;
 
+typedef int				(t_listcmp)(t_list *l1, t_list *l2);
+
 void					*ft_memset(void *b, int c, size_t len);
 void					ft_bzero(void *s, size_t n);
 void					*ft_memcpy(void *dst, const void *src, size_t n);
@@ -104,5 +106,8 @@ int						ft_valid_int_str(char *s);
 int						gnlite(const int fd, char **line);
 int						ft_getopt(int argc, char **argv,
 										const char *optstring);
+t_list					*ft_lstpop(t_list **elem);
+size_t					ft_lstlen(t_list *start);
+void					ft_lstsort(t_list **alst, t_listcmp *f);
 
 #endif

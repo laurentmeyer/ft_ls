@@ -6,6 +6,7 @@ HEADERDIR = includes
 
 SRCFILES =	directory.c			\
 			display.c			\
+			errors.c			\
 			ft_ls.c				\
 			get_options.c		\
 			libgen.c			\

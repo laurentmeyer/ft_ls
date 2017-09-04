@@ -69,7 +69,10 @@ OBJECTS =	ft_memset.o			\
 			ft_valid_int_str.o	\
 			ft_wcrtoutf.o		\
 			gnlite.o			\
-			ft_getopt.o
+			ft_getopt.o			\
+			ft_lstpop.o			\
+			ft_lstsort.o		\
+			ft_lstlen.o
 
 NAME = libft_original.a
 

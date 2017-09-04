@@ -10,10 +10,7 @@ char		*make_full_path(char *dirname, char *basename)
 	l2 = ft_strlen(basename);
 
 	if (!(res = (char *)malloc(l1 + l2 + 2)))
-	{
-		perror(NULL);
-		return (NULL);
-	}
+		exit_msg("make_full_path malloc failed");
 	memcpy(res, dirname, l1);
 	res[l1] = '/';
 	memcpy(res + l1 + 1, basename, l2 + 1);

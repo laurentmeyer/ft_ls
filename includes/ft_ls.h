@@ -11,7 +11,12 @@
 # include <dirent.h>
 
 #define _DARWIN_NO_64_BIT_INODE
+#define	FALSE 0
+#define	TRUE !FALSE
+#define SUCCESS 0
 #define ERROR -1
+#define NOT_DIRECTORY -2
+#define STDERR 2
 
 typedef struct			s_options {
 	int 				sort_reverse : 1;
@@ -27,18 +32,18 @@ typedef struct			s_file {
 	struct stat			stat;
 } 						t_file;
 
-typedef int				(t_listcmp)(t_list *l1, t_list *l2);
 typedef void			(t_listdisplay)(t_list *elem);
 
 t_file					*t_file_new(char *path, char *name, struct stat *stat);
-t_listcmp				*select_sort_function(t_options options);
+t_listcmp				*select_sort_function(t_options *options);
 t_options				get_options(int *argc_ptr, char ***argv_ptr);
 char					*make_full_path(char *dirname, char *basename);
-int						display_dir_contents(char *dirpath, t_options options);
-int						list_and_order_dir_contents(char *path, t_list **alst,
-													t_options options);
+void					display_dir_contents(char *dirpath, t_options *options);
+int						list_contents(char *path, t_list **alst);
 int						insert_ordered(t_file *file,
 												t_list **alst, t_options opt);
+void					exit_msg(char *str);
+void					exit_perror(char *str);
 
 #endif
 //
