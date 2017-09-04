@@ -30,11 +30,6 @@ void				display_dir_contents(char *dirpath, t_options *options)
 		return ;
 	}
 	sort_dir_contents(&children, options);
+	ft_printf("done sorting\n");
 	ft_lstiter(children, select_display_function(options));
-	//if (!options->recursive || !*children)
-	//	return ;
-	//child_ptr = children;
-	//while (child_ptr)
-	//{
-	//}
 }

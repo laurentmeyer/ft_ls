@@ -4,8 +4,11 @@ t_list	*ft_lstpop(t_list **elem_addr)
 {
 	t_list	*ret;
 
-	ret = *elem_addr;
-	if (*elem_addr)
-		*elem_addr = *elem_addr->next;
+	ret = NULL;
+	if (elem_addr && (ret = *elem_addr))
+	{
+		*elem_addr = ret->next;
+		ret->next = NULL;
+	}
 	return (ret);
 }

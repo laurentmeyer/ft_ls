@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:47:56 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/02/03 14:35:14 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/09/04 15:04:27 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ int						ft_getopt(int argc, char **argv,
 t_list					*ft_lstpop(t_list **elem);
 size_t					ft_lstlen(t_list *start);
 void					ft_lstsort(t_list **alst, t_listcmp *f);
+void					ft_lstappend(t_list **alst, t_list *to_append);
 
 #endif

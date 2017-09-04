@@ -43,8 +43,7 @@ int			list_contents(char *path, t_list **alst)
 		if (stat(fpath, &statbuf) == ERROR)
 			exit_perror(NULL);
 		free(fpath);
-		if (!(new = ft_lstnew(t_file_new(path, dir->d_name, &statbuf),
-						sizeof(t_file))))
+		if (!(new = t_file_lstnew(path, dir->d_name, &statbuf)))
 			exit_msg("struct s_list memory allocation failed\n");
 		ft_lstadd(alst, new);
 	}

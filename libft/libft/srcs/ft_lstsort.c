@@ -5,39 +5,39 @@ static t_list	*ft_lstmerge(t_list *m1, t_list *m2, t_listcmp *f)
 	t_list	*res;
 
 	res = NULL;
-	while (m1 || m2)
+	while (m1 && m2)
 	{
-		if (!m2 || (*f)(m1, m2) >= 0)
-		{
-			ft_lstadd(m1, &res);
-			m1 = m1->next;
-		}
-		else if (!m1 || (*f)(m1, m2) <= 0)
-		{
-			ft_lstadd(m2, &res);
-			m2 = m2->next;
-		}
+		if ((*f)(m1, m2) >= 0)
+			ft_lstappend(&res, ft_lstpop(&m1));
+		else
+			ft_lstappend(&res, ft_lstpop(&m2));
 	}
-	retun (res);
+	if (!m1)
+		ft_lstappend(&res, m2);
+	else if (!m2)
+		ft_lstappend(&res, m1);
+	return (res);
 }
 
 void			ft_lstsort(t_list **alst, t_listcmp *f)
 {
 	t_list	*left;
 	t_list	*right;
-	int		len;
-	int		i;
+	size_t	len;
+	size_t	i;
 
 	if ((len = ft_lstlen(*alst)) <= 1)
 		return ;
 	i = 0;
+	left = NULL;
+	right = NULL;
 	while (i < len / 2)
 	{
-		ft_lstadd(&left, ft_lstpop(alst));
+		ft_lstappend(&left, ft_lstpop(alst));
 		++i;
 	}
 	right = *alst;
 	ft_lstsort(&left, f);
 	ft_lstsort(&right, f);
-	*alst = ft_lstmerge(left, right);
+	*alst = ft_lstmerge(left, right, f);
 }

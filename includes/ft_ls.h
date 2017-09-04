@@ -34,7 +34,8 @@ typedef struct			s_file {
 
 typedef void			(t_listdisplay)(t_list *elem);
 
-t_file					*t_file_new(char *path, char *name, struct stat *stat);
+//t_file				*t_file_new(char *path, char *name, struct stat *stat);
+t_list					*t_file_lstnew(char *path, char *name, struct stat *statbuf);
 t_listcmp				*select_sort_function(t_options *options);
 t_options				get_options(int *argc_ptr, char ***argv_ptr);
 char					*make_full_path(char *dirname, char *basename);

@@ -1,25 +1,25 @@
 #include "ft_ls.h"
 
-int			list_and_order_args(int argc, char **argv,
-									t_list **alst, t_options options)
-{
-	struct stat		statbuf;
-	int				err;
-
-	err = 0;
-	while (argc--)
-	{
-		if ((err = stat(argv[argc], &statbuf)) == ERROR)
-		{
-			perror(NULL);
-			break ;
-		}
-		if ((err = insert_ordered(t_file_new(".", argv[argc], &statbuf),
-						alst, options)) == ERROR)
-			break;
-	}
-	return (err);
-}
+//int			list_and_order_args(int argc, char **argv,
+//									t_list **alst, t_options options)
+//{
+//	struct stat		statbuf;
+//	int				err;
+//
+//	err = 0;
+//	while (argc--)
+//	{
+//		if ((err = stat(argv[argc], &statbuf)) == ERROR)
+//		{
+//			perror(NULL);
+//			break ;
+//		}
+//		if ((err = insert_ordered(t_file_new(".", argv[argc], &statbuf),
+//						alst, options)) == ERROR)
+//			break;
+//	}
+//	return (err);
+//}
 
 int			main(int argc, char **argv)
 {
