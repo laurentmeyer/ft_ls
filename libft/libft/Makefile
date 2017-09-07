@@ -73,7 +73,8 @@ OBJECTS =	ft_memset.o			\
 			ft_lstpop.o			\
 			ft_lstsort.o		\
 			ft_lstlen.o			\
-			ft_lstappend.o
+			ft_lstappend.o		\
+			ft_basename.o
 
 NAME = libft_original.a
 

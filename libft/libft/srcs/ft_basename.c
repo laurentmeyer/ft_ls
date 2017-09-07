@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_basename.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/04 15:39:45 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/09/05 13:01:39 by lmeyer           ###   ########.fr       */
+/*   Created: 2017/09/07 14:35:36 by lmeyer            #+#    #+#             */
+/*   Updated: 2017/09/07 15:11:33 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
-#include <string.h>
-
-void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
+char	*ft_basename(char *path)
 {
-	(*del)((*alst)->content, (*alst)->content_size);
-	free(*alst);
-	*alst = NULL;
+	int		i;
+
+	if (!path || !*path)
+		return (".");
+	i = 0;
+	while (path[++i])
+		;
+	while (path[--i] == '/')
+		if (i == 0)
+			return ("/");
+	while (path[--i] != '/')
+		;
+	return (path + i + 1);
 }
