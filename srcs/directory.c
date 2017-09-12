@@ -39,27 +39,28 @@ void		add_t_file_to_list(char *fullpath, t_list **alst)
 //	return (closedir(dirp));
 //}
 
-int			list_dir_contents(char *dirpath, t_list **alst, t_options *options)
+int			list_dir_contents(char *path, t_list **alst, t_options *options)
 {
 	DIR				*dirp;
 	struct dirent	*dir;
 	struct stat		statbuf;
 	char			*fpath;
 
-	if (lstat(dirpath, &statbuf) == ERROR)	// stat vs lstat
+	if (lstat(path, &statbuf) == ERROR)	// stat vs lstat
 		exit_perror(NULL);					// faux ne doit pas être bloquant
 	if (!S_ISDIR(statbuf.st_mode))
 		return (NOT_DIRECTORY);
 	if (options->display_headers)
-		ft_printf("\n%s:\n", dirpath);
-	if ((dirp = opendir(dirpath)) == NULL)
+		ft_printf("\n%s:\n", path);
+	if ((dirp = opendir(path)) == NULL)
 	{
-		perror(NULL);
+		//perror(ft_basename(path));
+		ft_dprintf(STDOUT, "ls: %s: %s\n", ft_basename(path), strerror(errno));
 		return (NO_RIGHTS);
 	}
 	while ((dir = readdir(dirp)))
 	{
-		fpath = make_full_path(dirpath, dir->d_name);
+		fpath = make_full_path(path, dir->d_name);
 		if (options->display_dots || *(dir->d_name) != '.')
 			add_t_file_to_list(fpath, alst);
 		free(fpath);

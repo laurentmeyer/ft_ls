@@ -26,14 +26,15 @@ void		handle_multi_args(int argc, char **argv, t_options *options)
 int			main(int argc, char **argv)
 {
 	t_options 	options;
+	int			arg_pos;
 	//t_list		*args;
 
-	options = get_options(&argc, &argv); // rajouter une gestion d'erreurs
-	if (argc == 0)
+	arg_pos = get_options(&options, argc, argv); // rajouter une gestion d'erreurs
+	if (arg_pos == argc)
 		display_dir_contents(".", &options);
-	else if (argc == 1)
-		display_dir_contents(argv[0], &options);
-	else if (argc > 1)
+	else if (argc - arg_pos == 1)
+		display_dir_contents(argv[arg_pos], &options);
+	else if (argc - arg_pos > 1)
 		handle_multi_args(argc, argv, &options);
 //	while (1)
 //		;

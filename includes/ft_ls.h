@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 11:40:01 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/09/07 18:49:41 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/09/12 14:59:28 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include <sys/stat.h>
 # include <stdio.h>
 # include <dirent.h>
-
+# include <string.h> 
+# include <errno.h> 
 # define _DARWIN_NO_64_BIT_INODE
 # define FALSE 0
 # define TRUE !FALSE
@@ -48,10 +49,10 @@ typedef struct			s_file {
 typedef void			(t_displayf)(t_list *elem);
 typedef void			(t_sortf)(t_list *elem);
 
+int						get_options(t_options *options, int ac, char **av);
 t_list					*t_file_lstnew(char *path, struct stat *statbuf);
 void					t_file_lstdel(void *l, size_t size);
 t_listcmp				*select_sort_function(t_options *options);
-t_options				get_options(int *argc_ptr, char ***argv_ptr);
 char					*make_full_path(char *dirname, char *basename);
 void					display_dir_contents(char *dirpath, t_options *options);
 int						list_dir_contents(char *dirpath, t_list **alst,
