@@ -4,7 +4,8 @@ BINARY =	ft_ls
 SOURCEDIR =	srcs
 HEADERDIR = includes
 
-SRCFILES =	directory.c			\
+SRCFILES =	main.c				\
+			directory.c			\
 			display.c			\
 			errors.c			\
 			ft_ls.c				\

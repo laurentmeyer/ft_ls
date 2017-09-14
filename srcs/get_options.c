@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_options.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/14 14:34:47 by lmeyer            #+#    #+#             */
+/*   Updated: 2017/09/14 18:41:47 by lmeyer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 extern char	*g_optarg;
@@ -5,6 +17,16 @@ extern int	g_optind;
 extern int	g_optopt;
 extern int	g_opterr;
 extern int	g_optreset;
+
+static void	select_cmp_function(t_options *options)
+{
+	options->cmp_f = &cmp_names;
+}
+
+static void	select_stat_function(t_options *options)
+{
+	options->stat_f = &lstat;
+}
 
 int		get_options(t_options *options, int ac, char **av)
 {
@@ -24,5 +46,7 @@ int		get_options(t_options *options, int ac, char **av)
 		else if (ch == 't')
 			options->sort_timemod = 1;
 	}
+	select_cmp_function(options);
+	select_stat_function(options);
 	return (g_optind);
 }

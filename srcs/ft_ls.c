@@ -1,42 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/14 14:41:24 by lmeyer            #+#    #+#             */
+/*   Updated: 2017/09/14 18:43:20 by lmeyer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
-void		handle_multi_args(int argc, char **argv, t_options *options)
+static void			recurse_ft_ls(t_list *children, t_options *options)
 {
-	(void)argc;
-	(void)argv;
-	(void)options;
-//	struct stat		statbuf;
-//	int				err;
-//
-//	err = 0;
-//	while (argc--)
-//	{
-//		if ((err = stat(argv[argc], &statbuf)) == ERROR)
-//		{
-//			perror(NULL);
-//			break ;
-//		}
-//		if ((err = insert_ordered(t_file_new(".", argv[argc], &statbuf),
-//						alst, options)) == ERROR)
-//			break;
-//	}
-//	return (err);
+	t_list	*child;
+	t_file	*file;
+
+	child = children;
+	while (child)
+	{
+		file = (t_file *)(child->content);
+		if (S_ISDIR(file->stat.st_mode) && !ft_strequ((ft_basename(file->path)),
+					".") && !ft_strequ((ft_basename(file->path)), ".."))
+			ft_ls(file, options);
+		child = child->next;
+	}
 }
 
-int			main(int argc, char **argv)
+void				ft_ls(t_file *parent, t_options *options)
 {
-	t_options 	options;
-	int			arg_pos;
-	//t_list		*args;
+	t_list			*children;
 
-	arg_pos = get_options(&options, argc, argv); // rajouter une gestion d'erreurs
-	if (arg_pos == argc)
-		display_dir_contents(".", &options);
-	else if (argc - arg_pos == 1)
-		display_dir_contents(argv[arg_pos], &options);
-	else if (argc - arg_pos > 1)
-		handle_multi_args(argc, argv, &options);
-//	while (1)
-//		;
-	return (0);
+	children = NULL;
+	list_dir_contents(parent, &children, options);
+	if (parent->error)
+		display_parent_and_children(parent, children, options);
+	else
+	{
+		ft_lstsort(&children, options->cmp_f);
+		display_parent_and_children(parent, children, options);
+		if (options->recursive)
+			recurse_ft_ls(children, options);
+		ft_lstdel(&children, &t_file_lstdel);
+	}
 }
