@@ -21,8 +21,9 @@ static void			recurse_ft_ls(t_list *children, t_options *options)
 	while (child)
 	{
 		file = (t_file *)(child->content);
-		if (S_ISDIR(file->stat.st_mode) && !ft_strequ((ft_basename(file->path)),
-					".") && !ft_strequ((ft_basename(file->path)), ".."))
+		if (S_ISDIR(file->stat.st_mode)
+				&& !ft_strequ((ft_basename(file->path)), ".")
+				&& !ft_strequ((ft_basename(file->path)), ".."))
 			ft_ls(file, options);
 		child = child->next;
 	}
