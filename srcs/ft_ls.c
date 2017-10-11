@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:41:24 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/09/14 18:43:20 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/02 16:21:49 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void				ft_ls(t_file *parent, t_options *options)
 	else
 	{
 		ft_lstsort(&children, options->cmp_f);
+		if (options->sort_reverse)
+			ft_lstrev(&children);
 		display_parent_and_children(parent, children, options);
 		if (options->recursive)
 			recurse_ft_ls(children, options);
