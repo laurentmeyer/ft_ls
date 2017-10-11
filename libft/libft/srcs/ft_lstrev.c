@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpop.c                                        :+:      :+:    :+:   */
+/*   ft_lstrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/02 16:28:41 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/02 16:28:43 by lmeyer           ###   ########.fr       */
+/*   Created: 2017/10/02 16:23:08 by lmeyer            #+#    #+#             */
+/*   Updated: 2017/10/02 16:49:22 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstpop(t_list **elem_addr)
+void		ft_lstrev(t_list **alst)
 {
-	t_list	*ret;
+	t_list	*new;
+	t_list	*cpy;
 
-	ret = NULL;
-	if (elem_addr && (ret = *elem_addr))
-	{
-		*elem_addr = ret->next;
-		ret->next = NULL;
-	}
-	return (ret);
+	new = NULL;
+	cpy = *alst;
+	while (cpy)
+		ft_lstadd(&new, ft_lstpop(&cpy));
+	*alst = new;
 }

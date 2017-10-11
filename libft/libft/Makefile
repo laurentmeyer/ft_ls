@@ -74,6 +74,7 @@ OBJECTS =	ft_memset.o			\
 			ft_lstsort.o		\
 			ft_lstlen.o			\
 			ft_lstappend.o		\
+			ft_lstrev.o			\
 			ft_basename.o		\
 			btree_create_node.o	\
 			btree_insert_node.o
