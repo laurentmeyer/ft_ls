@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:34:47 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/09/14 18:41:47 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/02 16:53:57 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ extern int	g_optreset;
 
 static void	select_cmp_function(t_options *options)
 {
-	options->cmp_f = &cmp_names;
+	if (options->sort_timemod)
+		options->cmp_f = &cmp_timemod;
+	else
+		options->cmp_f = &cmp_names;
 }
 
 static void	select_stat_function(t_options *options)

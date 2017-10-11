@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 11:40:01 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/09/14 18:43:42 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/02 19:16:36 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void					display_children(t_list *children, t_options *options);
 void					display_parent_and_children(t_file *parent, t_list *children,
 		t_options *options);
 int						cmp_names(t_list *l1, t_list *l2);
+int						cmp_timemod(t_list *l1, t_list *l2);
 
 #endif
