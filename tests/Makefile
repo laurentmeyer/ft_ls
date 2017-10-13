@@ -38,6 +38,12 @@ setup :
 	mkdir $(TESTDIR)/dir01
 	echo "file1 content" > $(TESTDIR)/dir1/file1
 	touch $(TESTDIR)/dir1/file1
+	touch $(TESTDIR)/dir1/file2
+	touch $(TESTDIR)/dir1/file3
+	touch $(TESTDIR)/dir1/file4
+	touch $(TESTDIR)/dir1/file5
+	touch $(TESTDIR)/dir1/file6
+	touch $(TESTDIR)/dir1/file7
 	echo "file1 content" > $(TESTDIR)/dir1/file1
 	mkdir $(TESTDIR)/dir2
 	touch $(TESTDIR)/dir2/file1

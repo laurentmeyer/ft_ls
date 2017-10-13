@@ -1,17 +1,18 @@
 CC = 		gcc
-CFLAGS =	-Wall -Wextra -Werror
+CFLAGS =	-g -Wall -Wextra -Werror
 BINARY =	ft_ls
 SOURCEDIR =	srcs
 HEADERDIR = includes
 
-SRCFILES =	main.c				\
-			directory.c			\
-			display.c			\
-			errors.c			\
-			ft_ls.c				\
-			get_options.c		\
-			libgen.c			\
-			sort.c				\
+SRCFILES =	main.c			\
+			directory.c		\
+			display.c		\
+			display_long.c	\
+			errors.c		\
+			ft_ls.c			\
+			get_options.c	\
+			libgen.c		\
+			sort.c			\
 			t_file.c
 
 CCHEADERS = -I./$(HEADERDIR)				\

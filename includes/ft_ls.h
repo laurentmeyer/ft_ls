@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 11:40:01 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/02 19:16:36 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/13 17:50:00 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 # include "ft_printf.h"
 # include <unistd.h>
 # include <stdlib.h>
+# include <uuid/uuid.h>
 # include <sys/stat.h>
+# include <sys/types.h>
 # include <stdio.h>
 # include <dirent.h>
 # include <string.h> 
-# include <errno.h> 
+# include <errno.h>
+# include <pwd.h>
+# include <grp.h>
 # define _DARWIN_NO_64_BIT_INODE
 # define FALSE 0
 # define TRUE !FALSE
@@ -68,5 +72,7 @@ void					display_parent_and_children(t_file *parent, t_list *children,
 		t_options *options);
 int						cmp_names(t_list *l1, t_list *l2);
 int						cmp_timemod(t_list *l1, t_list *l2);
+void					print_filename(t_file *child, t_options *options);
+void					display_long(t_list *children, t_options *options);
 
 #endif

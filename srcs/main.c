@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:42:12 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/09/14 18:55:15 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/12 13:21:24 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ int			main(int argc, char **argv)
 			add_t_file_to_list(argv[arg_pos++], &parents, &options);
 	if (parents)
 		ft_ls((t_file *)(parents->content), &options);
+//	printf("IFMT: %d\n", S_IFMT);
+//	printf("IFDIR: %d\n", S_IFDIR >> 12);
+//	printf("IFREG: %d\n", S_IFREG >> 12);
 //	while (1)
 //		;
 	return (0);

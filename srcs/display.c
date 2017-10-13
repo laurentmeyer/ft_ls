@@ -6,44 +6,54 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:39:50 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/09/14 18:54:18 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/13 17:50:41 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+#define ARROW_LEN           4
+
+static const char	*g_colors[16] = {
+	"", CF_YEL, "\033[34;43m", "", C_BOLD, "", "\033[34;46m", "",
+	"", "", CF_MAG, "", ""/*SOCK*/, "", "", ""
+};
+
+void		print_filename(t_file *child, t_options *options)
+{
+	char	*filename;
+	mode_t	mode;
+	char	lnbuf[child->stat.st_size + ARROW_LEN + 1];
+
+	filename = ft_basename(child->path);
+	ft_bzero(lnbuf, sizeof(lnbuf));
+	mode = (child->stat.st_mode & S_IFMT) >> 12;
+	if (S_ISLNK(child->stat.st_mode) && options->display_long)
+	{
+		ft_strncpy(lnbuf, " -> ", ARROW_LEN);
+		readlink(child->path, lnbuf + ARROW_LEN, child->stat.st_size);
+	}
+	if (S_ISREG(child->stat.st_mode) && (S_IXUSR & child->stat.st_mode))
+		ft_printf(CF_RED "%s" C_RESET "\n", filename);
+	else
+		ft_printf("%s%s" C_RESET "%s\n", g_colors[mode], filename, lnbuf);
+}
+
 void		display_simple(t_list *children, t_options *options)
 {
 	char	*filename;
+	mode_t	mode;
 
 	while (children)
 	{
 		filename = ft_basename(((t_file *)(children->content))->path);
+		mode = ((t_file *)(children->content))->stat.st_mode;
 		if (options->display_dots || *filename != '.')
 		{
-			if (S_ISDIR(((t_file *)(children->content))->stat.st_mode))
-				ft_printf(C_BOLD "%s" C_RESET "\n", filename);
-			else if (S_ISFIFO(((t_file *)(children->content))->stat.st_mode))
-				ft_printf(CF_YEL "%s" C_RESET "\n", filename);
-			else if (S_ISCHR(((t_file *)(children->content))->stat.st_mode))
-				ft_printf(CF_BLU CB_YEL "%s" C_RESET "\n", filename);
-			else if (S_ISBLK(((t_file *)(children->content))->stat.st_mode))
-				ft_printf(CF_BLU CB_CYA  "%s" C_RESET "\n", filename);
-			else if (S_ISLNK(((t_file *)(children->content))->stat.st_mode))
-				ft_printf(CF_MAG "%s" C_RESET "\n", filename);
-			else if (S_IXUSR & ((t_file *)(children->content))->stat.st_mode)
-				ft_printf(CF_RED "%s" C_RESET "\n", filename);
-			else
-				ft_printf("%s\n", filename);
+			print_filename((t_file *)(children->content), options);
 		}
 		children = children->next;
 	}
-}
-
-void		display_children(t_list *children, t_options *options)
-{
-	if (!(options->display_long))
-		display_simple(children, options);
 }
 
 void		display_parent_and_children(t_file *parent, t_list *children,
@@ -56,5 +66,10 @@ void		display_parent_and_children(t_file *parent, t_list *children,
 		ft_dprintf(STDERR, "ls: %s: %s\n", ft_basename(parent->path),
 				parent->error);
 	else
-		display_children(children, options);
+	{
+		if (options->display_long)
+			display_long(children, options);
+		else
+			display_simple(children, options);
+	}
 }
