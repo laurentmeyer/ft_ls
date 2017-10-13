@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 11:26:01 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/03 14:26:50 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/12 17:15:33 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef char			*t_handler(t_conv *conv, void *v);
 int						ft_printf(const char *format, ...);
 int						ft_vprintf(const char *format, va_list ap);
 int						ft_asprintf(char **ret, const char *format, ...);
+int						ft_sprintf(char *str, const char *format, ...);
+int						ft_vsprintf(char *str, const char *format, va_list ap);
 int						ft_vasprintf(char **ret, const char *format,
 										va_list ap);
 int						ft_dprintf(int fd, const char *format, ...);
