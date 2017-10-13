@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:47:56 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/02 16:23:48 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/12 15:59:11 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,6 @@ void					ft_lstsort(t_list **alst, t_listcmp *f);
 void					ft_lstappend(t_list **alst, t_list *to_append);
 void					ft_lstrev(t_list **alst);
 char					*ft_basename(char *path);
+int						ft_intlen(int n);
 
 #endif

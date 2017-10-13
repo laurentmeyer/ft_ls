@@ -19,6 +19,7 @@ OBJECTS =	ft_memset.o			\
 			ft_strcmp.o			\
 			ft_strncmp.o		\
 			ft_atoi.o			\
+			ft_intlen.o			\
 			ft_isalpha.o		\
 			ft_isdigit.o		\
 			ft_isalnum.o		\
