@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:39:50 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/13 17:50:41 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 11:27:01 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static const char	*g_colors[16] = {
 	"", CF_YEL, "\033[34;43m", "", C_BOLD, "", "\033[34;46m", "",
-	"", "", CF_MAG, "", ""/*SOCK*/, "", "", ""
+	"", "", CF_MAG, "", CF_GRE, "", "", ""
 };
 
 void		print_filename(t_file *child, t_options *options)

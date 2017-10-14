@@ -6,14 +6,14 @@ STDOUT = $(TESTROOT)/stdout.txt
 STDERR = $(TESTROOT)/stderr.txt
 
 all : setup
-	echo "\n=========== TEST SIMPLE =========\n" > $(STDOUT)
-	echo "\n=========== TEST SIMPLE =========\n" > $(STDERR)
-	-ls -R $(TESTDIR) > diff1.txt
-	-$(BINARY) -R $(TESTDIR) > diff2.txt
-	-diff diff1.txt diff2.txt >> $(STDOUT)
-	rm diff1.txt
-	rm diff2.txt
-	cat $(STDOUT)
+	#echo "\n=========== TEST SIMPLE =========\n" > $(STDOUT)
+	#echo "\n=========== TEST SIMPLE =========\n" > $(STDERR)
+	#-ls -R $(TESTDIR) > diff1.txt
+	#-$(BINARY) -R $(TESTDIR) > diff2.txt
+	#-diff diff1.txt diff2.txt >> $(STDOUT)
+	#rm diff1.txt
+	#rm diff2.txt
+	#cat $(STDOUT)
 
 make_diff :
 
@@ -26,6 +26,8 @@ re : clean all
 
 setup :
 	mkdir $(TESTDIR)
+	gcc -o create-a-socket create-a-socket.c
+	./create-a-socket $(TESTDIR)/mysock
 	touch $(TESTDIR)/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 	touch $(TESTDIR)/rootfile
 	mkfifo $(TESTDIR)/fifo1
