@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_getopt.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/14 11:39:14 by lmeyer            #+#    #+#             */
+/*   Updated: 2017/10/14 11:39:17 by lmeyer           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include "libft.h"
 #include "ft_printf.h"
@@ -16,7 +28,7 @@ static int	restart_or_start_next(int argc, char **argv, char **curarg_ptr)
 		*curarg_ptr = "";
 		return (-1);
 	}
-	if ((*curarg_ptr)[1] && (++(*curarg_ptr))[0] == '-') 
+	if ((*curarg_ptr)[1] && (++(*curarg_ptr))[0] == '-')
 	{
 		g_optind++;
 		*curarg_ptr = "";
@@ -65,7 +77,7 @@ static int	argument_needed(int argc, char **argv,
 	return (0);
 }
 
-int				ft_getopt(int argc, char **argv, const char *optstring)
+int			ft_getopt(int argc, char **argv, const char *optstring)
 {
 	static char	*curarg_ptr = "";
 	char		*optstr_ptr;

@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 17:51:56 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/13 17:51:58 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 11:36:10 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 #define PERMISSIONS_BUF_LEN 11
 #define DATE_BUF_LEN        13
-#define	SECS_IN_6_MONTHS	365 / 2 * 24 * 3600
+#define SECS_IN_6_MONTHS    365 / 2 * 24 * 3600
 #define PRECISIONS_COUNT    4
 #define LINK 0
 #define NAME 1
 #define GROUP 2
 #define SIZE 3
 
-static int	max(int a, int b)
+static int		max(int a, int b)
 {
 	return ((a > b) ? a : b);
 }
 
-int	make_format(char **format, t_list *children, t_options *options)
+static int		format_str(char **format, t_list *children, t_options *options)
 {
 	int			total;
 	int			m[PRECISIONS_COUNT];
@@ -53,7 +53,7 @@ int	make_format(char **format, t_list *children, t_options *options)
 	return (total);
 }
 
-void		permissions_str(char buf[PERMISSIONS_BUF_LEN], mode_t mode)
+static void		permissions_str(char buf[PERMISSIONS_BUF_LEN], mode_t mode)
 {
 	buf[0] = '-';
 	buf[0] = (buf[0] == '-' && S_ISDIR(mode)) ? 'd' : buf[0];
@@ -74,7 +74,7 @@ void		permissions_str(char buf[PERMISSIONS_BUF_LEN], mode_t mode)
 	buf[10] = '\0';
 }
 
-void		date_str(char date[DATE_BUF_LEN], const time_t *clock)
+static void		date_str(char date[DATE_BUF_LEN], const time_t *clock)
 {
 	char	*ct;
 	time_t	diff;
@@ -90,7 +90,7 @@ void		date_str(char date[DATE_BUF_LEN], const time_t *clock)
 		ft_strncpy(date + 7, ct + 11, 5);
 }
 
-void		display_long(t_list *children, t_options *options)
+void			display_long(t_list *children, t_options *options)
 {
 	char		perms[PERMISSIONS_BUF_LEN];
 	char		date[DATE_BUF_LEN];
@@ -99,7 +99,7 @@ void		display_long(t_list *children, t_options *options)
 	int			total;
 
 	format = NULL;
-	if ((total = make_format(&format, children, options)))
+	if ((total = format_str(&format, children, options)))
 		ft_printf("total %d\n", total);
 	while (children)
 	{

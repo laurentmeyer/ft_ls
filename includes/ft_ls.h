@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 11:40:01 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/13 17:50:00 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 11:37:04 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <sys/types.h>
 # include <stdio.h>
 # include <dirent.h>
-# include <string.h> 
+# include <string.h>
 # include <errno.h>
 # include <pwd.h>
 # include <grp.h>
@@ -68,8 +68,8 @@ void					list_dir_contents(t_file *file, t_list **alst,
 void					exit_msg(char *str);
 void					exit_perror(char *str);
 void					display_children(t_list *children, t_options *options);
-void					display_parent_and_children(t_file *parent, t_list *children,
-		t_options *options);
+void					display_parent_and_children(t_file *parent,
+		t_list *children, t_options *options);
 int						cmp_names(t_list *l1, t_list *l2);
 int						cmp_timemod(t_list *l1, t_list *l2);
 void					print_filename(t_file *child, t_options *options);

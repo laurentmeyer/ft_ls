@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:34:47 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/02 16:53:57 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 11:34:44 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	select_stat_function(t_options *options)
 	options->stat_f = &lstat;
 }
 
-int		get_options(t_options *options, int ac, char **av)
+int			get_options(t_options *options, int ac, char **av)
 {
 	int			ch;
 

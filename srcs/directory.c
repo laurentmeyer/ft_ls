@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 11:50:33 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/09/14 18:03:38 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 11:32:54 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void		list_dir_contents(t_file *file, t_list **alst, t_options *options)
 		return ;
 	}
 	while ((dir = readdir(dirp)))
-		add_t_file_to_list(make_full_path(file->path, dir->d_name), alst, options);
+		add_t_file_to_list(make_full_path(file->path, dir->d_name),
+				alst, options);
 	if (closedir(dirp))
 		ft_dprintf(STDERR, "ls: %s: %s\n", file->path, strerror(errno));
 }

@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:55:23 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/02 17:15:52 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 11:35:46 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	cmp_timemod(t_list *l1, t_list *l2)
 
 	t1 = ((t_file *)(l1->content))->stat.st_mtimespec;
 	t2 = ((t_file *)(l2->content))->stat.st_mtimespec;
-
 	if (t1.tv_sec != t2.tv_sec)
 		return (t1.tv_sec < t2.tv_sec ? -1 : 1);
 	if (t1.tv_nsec != t2.tv_nsec)
