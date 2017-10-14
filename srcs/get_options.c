@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:34:47 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/14 11:34:44 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 12:07:19 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ int			get_options(t_options *options, int ac, char **av)
 	}
 	select_cmp_function(options);
 	select_stat_function(options);
+	options->first_display = 1;
 	return (g_optind);
 }

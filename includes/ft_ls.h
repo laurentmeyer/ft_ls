@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 11:40:01 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/14 11:37:04 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 12:08:45 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct			s_options {
 	int					display_long : 1;
 	int					display_headers : 1;
 	int					recursive : 1;
+	int					first_display : 1;
 	t_listcmp			*cmp_f;
 	t_statf				*stat_f;
 }						t_options;

@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:39:50 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/14 11:31:20 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/14 12:08:33 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ void		display_simple(t_list *children, t_options *options)
 void		display_parent_and_children(t_file *parent, t_list *children,
 		t_options *options)
 {
-	if (options->display_headers)
+	if (options->display_headers && options->first_display)
+		ft_printf("%s:\n", parent->path);
+	else if (options->display_headers)
 		ft_printf("\n%s:\n", parent->path);
 	options->display_headers = 1;
+	options->first_display = 0;
 	if (parent->error)
 		ft_dprintf(STDERR, "ls: %s: %s\n", ft_basename(parent->path),
 				parent->error);
