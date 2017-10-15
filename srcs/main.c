@@ -6,54 +6,59 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:42:12 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/12 13:21:24 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/15 15:01:51 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		handle_multi_args(int argc, char **argv, t_options *options)
+static void		split_files_dirs(t_list *parents, t_list **files, t_list **dirs,
+		t_options *options)
 {
-	(void)argc;
-	(void)argv;
-	(void)options;
-//	struct stat		statbuf;
-//	int				err;
-//
-//	err = 0;
-//	while (argc--)
-//	{
-//		if ((err = stat(argv[argc], &statbuf)) == ERROR)
-//		{
-//			perror(NULL);
-//			break ;
-//		}
-//		if ((err = insert_ordered(t_file_new(".", argv[argc], &statbuf),
-//						alst, options)) == ERROR)
-//			break;
-//	}
-//	return (err);
+	ft_lstsort(&parents, options->cmp_f);
+	if (options->sort_reverse == 0)
+		ft_lstrev(&parents);
+	while (parents)
+	{
+		if (S_ISDIR(((t_file *)(parents->content))->stat.st_mode))
+			ft_lstadd(dirs, ft_lstpop(&parents));
+		else
+			ft_lstadd(files, ft_lstpop(&parents));
+	}
 }
 
-int			main(int argc, char **argv)
+static void		display_files_dirs(t_list *files, t_list *dirs,
+		t_options *options)
 {
-	t_options 	options;
+	if (files)
+		display_children(files);
+	options->files_done = 1;
+	while (dirs)
+	{
+		ft_ls((t_file *)(dirs->content));
+		dirs = dirs->next;
+	}
+}
+
+int				main(int argc, char **argv)
+{
+	t_options	options;
 	int			arg_pos;
 	t_list		*parents;
+	t_list		*files;
+	t_list		*dirs;
 
-	arg_pos = get_options(&options, argc, argv); // rajouter une gestion d'erreurs
+	arg_pos = get_options(&options, argc, argv);
+	// rajouter une gestion d'erreurs et un usage
 	parents = NULL;
 	if (arg_pos == argc)
 		add_t_file_to_list(".", &parents, &options);
 	else
 		while (arg_pos < argc)
 			add_t_file_to_list(argv[arg_pos++], &parents, &options);
-	if (parents)
-		ft_ls((t_file *)(parents->content), &options);
-//	printf("IFMT: %d\n", S_IFMT);
-//	printf("IFDIR: %d\n", S_IFDIR >> 12);
-//	printf("IFREG: %d\n", S_IFREG >> 12);
-//	while (1)
-//		;
+	files = NULL;
+	dirs = NULL;
+	split_files_dirs(parents, &files, &dirs, &options);
+	display_files_dirs(files, dirs, &options);
 	return (0);
 }

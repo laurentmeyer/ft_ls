@@ -6,51 +6,43 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 17:51:56 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/14 11:36:10 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/15 17:05:32 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-#define PERMISSIONS_BUF_LEN 11
-#define DATE_BUF_LEN        13
+#include <stdio.h>//
+
 #define SECS_IN_6_MONTHS    365 / 2 * 24 * 3600
-#define PRECISIONS_COUNT    4
-#define LINK 0
-#define NAME 1
-#define GROUP 2
-#define SIZE 3
+#define OFFSET 2
 
-static int		max(int a, int b)
+static void		get_precisions(t_list *children)
 {
-	return ((a > b) ? a : b);
-}
-
-static int		format_str(char **format, t_list *children, t_options *options)
-{
-	int			total;
-	int			m[PRECISIONS_COUNT];
+	int			l;
+	t_format	*format;
 	struct stat	s;
 
-	ft_bzero(m, sizeof(m));
-	total = 0;
-	while (children)
+	if (is_hidden((t_file *)(children->content)))
+		return;
+	format = ((t_file *)(children->content))->options->format;
+	s = ((t_file *)(children->content))->stat;
+	if ((l = ft_intlen(s.st_nlink)) > format->p_link)
+		format->p_link = l;
+	if ((l = ft_strlen(getpwuid(s.st_uid)->pw_name)) > format->p_name)
+		format->p_name = l;
+	if ((l = ft_strlen(getgrgid(s.st_gid)->gr_name)) > format->p_group)
+		format->p_group = l;
+	if (S_ISBLK(s.st_mode) || S_ISCHR(s.st_mode))
 	{
-		if (options->display_dots
-				|| *(ft_basename(((t_file *)(children->content))->path)) != '.')
-		{
-			s = ((t_file *)(children->content))->stat;
-			m[LINK] = max(ft_intlen(s.st_nlink), m[LINK]);
-			m[NAME] = max(ft_strlen(getpwuid(s.st_uid)->pw_name), m[NAME]);
-			m[GROUP] = max(ft_strlen(getpwuid(s.st_uid)->pw_name), m[GROUP]);
-			m[SIZE] = max(ft_intlen(s.st_size), m[SIZE]);
-			total += s.st_blocks;
-		}
-		children = children->next;
+		if ((l = ft_intlen(major(s.st_rdev))) > format->p_major)
+			format->p_major = l;
+		if ((l = ft_intlen(minor(s.st_rdev))) > format->p_minor)
+			format->p_minor = l;
 	}
-	ft_asprintf(format, "%%s  %%%dd %%%ds  %%%ds  %%%dd %%s ",
-			m[LINK], m[NAME], m[GROUP], m[SIZE]);
-	return (total);
+	else if ((l = ft_intlen(s.st_size)) > format->p_size)
+			format->p_size = l;
+	format->p_total += s.st_blocks;
 }
 
 static void		permissions_str(char buf[PERMISSIONS_BUF_LEN], mode_t mode)
@@ -90,30 +82,58 @@ static void		date_str(char date[DATE_BUF_LEN], const time_t *clock)
 		ft_strncpy(date + 7, ct + 11, 5);
 }
 
-void			display_long(t_list *children, t_options *options)
+void			display_long_line(t_list *child)
 {
+	struct stat	s;
+	t_format	*format;
 	char		perms[PERMISSIONS_BUF_LEN];
 	char		date[DATE_BUF_LEN];
-	char		*format;
-	struct stat	s;
-	int			total;
 
-	format = NULL;
-	if ((total = format_str(&format, children, options)))
-		ft_printf("total %d\n", total);
-	while (children)
+	format = ((t_file *)(child->content))->options->format;
+	if (is_hidden((t_file *)(child->content)))
+		return ;
+	s = ((t_file *)(child->content))->stat;
+	permissions_str(perms, s.st_mode);
+	date_str(date, (const time_t *)(&(s.st_mtimespec.tv_sec)));
+	if (S_ISCHR(s.st_mode) || S_ISBLK(s.st_mode))
+		ft_printf(format->format_dev,
+				perms, s.st_nlink, getpwuid(s.st_uid)->pw_name,
+				getgrgid(s.st_gid)->gr_name, major(s.st_rdev),
+				minor(s.st_rdev), date);
+	else
+		ft_printf(format->format_std,
+				perms, s.st_nlink, getpwuid(s.st_uid)->pw_name,
+				getgrgid(s.st_gid)->gr_name, s.st_size, date);
+	print_filename((t_file *)(child->content));
+}
+
+void			make_format(t_options *options)
+{
+	t_format	*f;
+
+	f = options->format;
+	if (f->p_major)
 	{
-		if (options->display_dots
-				|| *ft_basename(((t_file *)(children->content))->path) != '.')
-		{
-			s = ((t_file *)(children->content))->stat;
-			permissions_str(perms, s.st_mode);
-			date_str(date, (const time_t *)(&(s.st_mtimespec.tv_sec)));
-			ft_printf(format, perms, s.st_nlink, getpwuid(s.st_uid)->pw_name,
-					getgrgid(s.st_gid)->gr_name, s.st_size, date);
-			print_filename((t_file *)(children->content), options);
-		}
-		children = children->next;
+		if (f->p_size > OFFSET + f->p_minor + f->p_major)
+			f->p_major = f->p_size - f->p_minor - OFFSET;
+		else
+			f->p_size = f->p_major + f->p_minor + OFFSET;
+		sprintf(f->format_dev, "%%s  %%-%dd %%-%ds  %%-%ds %%%dd,  %%%dd %%s ",
+				f->p_link, f->p_name, f->p_group, f->p_major, f->p_minor);
 	}
-	free(format);
+	sprintf(f->format_std, "%%s  %%%dd %%-%ds  %%-%ds  %%%dd %%s ",
+			f->p_link, f->p_name, f->p_group, f->p_size);
+}
+
+void			display_long(t_list *children)
+{
+	t_options	*options;
+
+	options = ((t_file *)(children->content))->options;
+	ft_bzero(options->format, sizeof(t_format));
+	ft_lstiter(children, &get_precisions);
+	make_format(options);
+	if (options->format->p_total || options->files_done)
+		ft_printf("total %d\n", options->format->p_total);
+	ft_lstiter(children, &display_long_line);
 }
