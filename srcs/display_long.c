@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/13 17:51:56 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/15 17:05:32 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/17 14:17:00 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #define SECS_IN_6_MONTHS    365 / 2 * 24 * 3600
 #define OFFSET 2
 
-static void		get_precisions(t_list *children)
+void		get_precisions(t_list *children)
 {
 	int			l;
 	t_format	*format;
@@ -45,7 +45,7 @@ static void		get_precisions(t_list *children)
 	format->p_total += s.st_blocks;
 }
 
-static void		permissions_str(char buf[PERMISSIONS_BUF_LEN], mode_t mode)
+void		permissions_str(char buf[PERMISSIONS_BUF_LEN], mode_t mode)
 {
 	buf[0] = '-';
 	buf[0] = (buf[0] == '-' && S_ISDIR(mode)) ? 'd' : buf[0];
@@ -66,7 +66,7 @@ static void		permissions_str(char buf[PERMISSIONS_BUF_LEN], mode_t mode)
 	buf[10] = '\0';
 }
 
-static void		date_str(char date[DATE_BUF_LEN], const time_t *clock)
+void		date_str(char date[DATE_BUF_LEN], const time_t *clock)
 {
 	char	*ct;
 	time_t	diff;
@@ -133,7 +133,8 @@ void			display_long(t_list *children)
 	ft_bzero(options->format, sizeof(t_format));
 	ft_lstiter(children, &get_precisions);
 	make_format(options);
-	if (options->format->p_total || options->files_done)
+	//if (options->format->p_total || options->files_done)
+	if (options->files_done)
 		ft_printf("total %d\n", options->format->p_total);
 	ft_lstiter(children, &display_long_line);
 }

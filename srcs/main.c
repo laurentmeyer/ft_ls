@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:42:12 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/17 12:01:15 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/17 14:33:32 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,26 @@ static void		split_files_dirs(t_list *parents, t_list **files, t_list **dirs,
 		else if (file->error)
 		{
 			ft_dprintf(STDERR, "ft_ls: %s: %s\n", file->path, strerror(errno));
-			ft_lstpop(&parents);
+			parents = parents->next;
 		}
 		else
 			ft_lstadd(files, ft_lstpop(&parents));
 	}
 }
 
-static void		display_files_dirs(t_list *files, t_list *dirs,
-		t_options *options)
+static void		display_files(t_list *files)
 {
-	if (files)
-		display_children(files);
-	options->files_done = 1;
-	while (dirs)
-	{
-		ft_ls((t_file *)(dirs->content));
-		dirs = dirs->next;
-	}
+	if (!files)
+		return ;
+	display_children(files);
+	((t_file *)(files->content))->options->first_display = 0;
+}
+
+static void		display_dirs(t_list *dirs)
+{
+	if (!dirs)
+		return ;
+	ft_lstiter(dirs, &ft_ls);
 }
 
 int				main(int argc, char **argv)
@@ -67,6 +69,8 @@ int				main(int argc, char **argv)
 	files = NULL;
 	dirs = NULL;
 	split_files_dirs(parents, &files, &dirs, &options);
-	display_files_dirs(files, dirs, &options);
+	display_files(files);
+	options.files_done = 1;
+	display_dirs(dirs);
 	return (0);
 }

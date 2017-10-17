@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:39:50 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/17 11:33:41 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/17 14:39:37 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		print_filename(t_file *child)
 
 	ft_bzero(lnbuf, sizeof(lnbuf));
 	options = child->options;
-	filename = ft_basename(child->path);
+	filename = options->files_done ? ft_basename(child->path) : child->path;
 	ft_bzero(lnbuf, sizeof(lnbuf));
 	mode = (child->stat.st_mode & S_IFMT) >> 12;
 	if (S_ISLNK(child->stat.st_mode) && options->display_long)
@@ -60,21 +60,8 @@ void		print_filename(t_file *child)
 
 void		display_simple(t_list *children)
 {
-	char	*filename;
-	mode_t	mode;
-	t_options	*options;
-
-	options = ((t_file *)(children->content))->options;
-	while (children)
-	{
-		filename = ft_basename(((t_file *)(children->content))->path);
-		mode = ((t_file *)(children->content))->stat.st_mode;
-		if (options->display_dots || *filename != '.')
-		{
+		if (!is_hidden((t_file *)(children->content)))
 			print_filename((t_file *)(children->content));
-		}
-		children = children->next;
-	}
 }
 
 void		display_children(t_list *children)
@@ -85,9 +72,17 @@ void		display_children(t_list *children)
 	options->display_headers = 1;
 	options->first_display = 0;
 	if (options->display_long)
-		display_long(children);
+	{
+		ft_bzero(options->format, sizeof(t_format));
+		ft_lstiter(children, &get_precisions);
+		make_format(options);
+		//if (options->format->p_total || options->files_done)
+		if (options->files_done)
+			ft_printf("total %d\n", options->format->p_total);
+		ft_lstiter(children, &display_long_line);
+	}
 	else
-		display_simple(children);
+		ft_lstiter(children, &display_simple);
 }
 
 void		display_parent_and_children(t_file *parent, t_list *children)
