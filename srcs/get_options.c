@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:34:47 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/15 15:18:39 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/19 16:03:30 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int			get_options(t_options *options, int ac, char **av)
 
 	ft_bzero(options, sizeof(t_options));
 	if (!(options->format = (t_format *)malloc(sizeof(t_format))))
-		; // gestion d'erreur
-	while ((ch = ft_getopt(ac, av, "alRrt")) != -1)
+		exit_perror("ft_ls");
+	while ((ch = ft_getopt(ac, av, "alRrt1")) != -1)
 	{
 		if (ch == 'a')
 			options->display_dots = 1;
@@ -50,6 +50,8 @@ int			get_options(t_options *options, int ac, char **av)
 			options->sort_reverse = 1;
 		else if (ch == 't')
 			options->sort_timemod = 1;
+		else if (ch == '?')
+			exit_msg("usage: ft_ls [-alrtR] [file ...]\n");
 	}
 	select_cmp_function(options);
 	select_stat_function(options);

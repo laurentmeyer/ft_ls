@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 11:50:23 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/15 10:41:18 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/19 17:17:04 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,23 @@ static t_list		*t_file_lstnew(char *path, struct stat *statbuf,
 void				add_t_file_to_list(char *fullpath, t_list **alst,
 		t_options *options)
 {
-	struct stat		statbuf;
+	struct stat		lsbuf;
+	struct stat		sbuf;
+	struct stat		*to_copy;
 	t_list			*new;
 	char			*error;
 
 	error = NULL;
-	ft_bzero(&statbuf, sizeof(struct stat));
-	if ((*(options->stat_f))(fullpath, &statbuf) == ERROR)
+	ft_bzero(&lsbuf, sizeof(struct stat));
+	ft_bzero(&sbuf, sizeof(struct stat));
+	if ((*(options->stat_f))(fullpath, &lsbuf) == ERROR)
 		error = strerror(errno);
-	if (!(new = t_file_lstnew(fullpath, &statbuf, options)))
+	if (!error && S_ISLNK(lsbuf.st_mode) && stat(fullpath, &sbuf) == ERROR)
+		error = strerror(errno);
+	to_copy = &lsbuf;
+	if (S_ISDIR(sbuf.st_mode) && options->display_long == 0)
+		to_copy = &sbuf;
+	if (!(new = t_file_lstnew(fullpath, to_copy, options)))
 		exit_msg("struct s_list memory allocation failed\n");
 	if (error)
 		((t_file *)(new->content))->error = error;

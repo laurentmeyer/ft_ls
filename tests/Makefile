@@ -33,6 +33,7 @@ setup :
 	mkfifo $(TESTDIR)/fifo1
 	echo "file1 content" > $(TESTDIR)/rootfile
 	mkdir $(TESTDIR)/dir1
+	ln -s $(TESTDIR)/dir1 $(TESTDIR)/dir1symlink
 	ln -s $(TESTDIR)/rootfile1 $(TESTDIR)/dir1/symlink1
 	mkdir $(TESTDIR)/dir1/subdir1
 	touch $(TESTDIR)/dir1/subdir1/file1

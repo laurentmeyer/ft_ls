@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 11:40:01 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/17 14:36:12 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/19 16:08:33 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ void					ft_ls(t_list *list);
 int						get_options(t_options *options, int ac, char **av);
 void					add_t_file_to_list(char *fullpath, t_list **alst,
 		t_options *options);
-//t_list		*t_file_lstnew(char *path, struct stat *statbuf, t_options *options)
-//t_list					*t_file_lstnew(char *path, struct stat *statbuf);
 void					t_file_lstdel(void *l, size_t size);
 char					*make_full_path(char *dirname, char *basename);
 void					list_dir_contents(t_file *file, t_list **alst);
@@ -95,7 +93,8 @@ int						cmp_timemod(t_list *l1, t_list *l2);
 void					print_filename(t_file *child);
 void					display_long(t_list *children);
 void					get_precisions(t_list *children);
-void					permissions_str(char buf[PERMISSIONS_BUF_LEN], mode_t mode);
+void					permissions_str(char buf[PERMISSIONS_BUF_LEN],
+		mode_t mode);
 void					date_str(char date[DATE_BUF_LEN], const time_t *clock);
 void					display_long_line(t_list *child);
 void					make_format(t_options *options);
