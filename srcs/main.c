@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 14:42:12 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/20 18:40:27 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/20 18:53:14 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void		split_files_dirs(t_list **parents, t_list **files,
 		{
 			ft_dprintf(STDERR, "ft_ls: %s: %s\n", file->path, strerror(errno));
 			ft_lstadd(&errors, ft_lstpop(parents));
+			file->options->display_headers = 1;
 		}
 		else
 			ft_lstadd(files, ft_lstpop(parents));
@@ -85,7 +86,6 @@ int				main(int argc, char **argv)
 	split_files_dirs(&parents, &files, &dirs);
 	display_files(&files);
 	options.files_done = 1;
-	options.display_headers = 1;
 	display_dirs(&dirs);
 	return (0);
 }
