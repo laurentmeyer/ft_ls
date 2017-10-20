@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 11:26:01 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/12 17:15:33 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/20 13:33:51 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int						ft_vasprintf(char **ret, const char *format,
 int						ft_dprintf(int fd, const char *format, ...);
 int						ft_vdprintf(int fd, const char *format, va_list ap);
 int						find_next_conversion(char *format, char **start,
-												char **end);
+						char **end);
 t_conv					*new_conversion(char *start, int len);
 int						get_modifier(char *s);
 int						get_flags(char *s);
