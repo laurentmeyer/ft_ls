@@ -6,7 +6,7 @@
 /*   By: lmeyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/14 11:34:58 by lmeyer            #+#    #+#             */
-/*   Updated: 2017/10/14 11:35:31 by lmeyer           ###   ########.fr       */
+/*   Updated: 2017/10/20 18:58:51 by lmeyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char		*make_full_path(char *dirname, char *basename)
 	l2 = ft_strlen(basename);
 	if (!(res = (char *)malloc(l1 + l2 + 2)))
 		exit_msg("make_full_path malloc failed");
-	memcpy(res, dirname, l1);
+	ft_memcpy(res, dirname, l1);
 	res[l1] = '/';
-	memcpy(res + l1 + 1, basename, l2 + 1);
+	ft_memcpy(res + l1 + 1, basename, l2 + 1);
 	return (res);
 }
